@@ -32,7 +32,7 @@
            - --bg-card: Background for cards/containers
            - --text-primary: Main text color (light gray)
            - --text-secondary: Secondary/muted text color
-           - --accent: Primary accent color (blue) - used for links, highlights
+           - --accent: Primary accent color (red) - used for links, highlights
            - --accent-hover: Accent color on hover
            - --gradient-1/2/3: Gradient colors for various elements
            - --gradient-hero: Hero section background gradient
@@ -43,12 +43,120 @@
             --bg-card: #111111;
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
-            --accent: #2997ff;
-            --accent-hover: #0077ed;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent: #ff4444;
+            --accent-hover: #cc0000;
+            --gradient-1: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
             --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --gradient-hero: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            --gradient-3: linear-gradient(135deg, #ff6666 0%, #ff3333 100%);
+            --gradient-hero: linear-gradient(180deg, #2e1a1a 0%, #3e1616 50%, #230f0f 100%);
+        }
+
+        /* ============================================
+           LIGHT THEME (prefers-color-scheme: light)
+           ============================================
+           Overrides for light mode. Switches backgrounds to light,
+           text to dark, keeps red accent.
+        */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-primary: #f8f8fa;
+                --bg-secondary: #f1f1f5;
+                --bg-card: #ffffff;
+                --text-primary: #0f0f10;
+                --text-secondary: #4b4b50;
+                --accent: #ff4444;
+                --accent-hover: #cc0000;
+                --gradient-1: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);
+                --gradient-2: linear-gradient(135deg, #ff4444 0%, #dd2222 100%);
+                --gradient-3: linear-gradient(135deg, #ff5555 0%, #cc1111 100%);
+                --gradient-hero: linear-gradient(180deg, #ffcccc 0%, #ff9999 50%, #ff6666 100%);
+            }
+
+            nav {
+                background: rgba(255, 255, 255, 0.85);
+                color: var(--text-primary);
+            }
+
+            .hero::before {
+                background: radial-gradient(circle, rgba(255, 51, 51, 0.2) 0%, transparent 70%);
+            }
+
+            .btn-primary {
+                background: var(--accent);
+                color: #ffffff;
+                box-shadow: 0 12px 30px rgba(255, 68, 68, 0.25);
+            }
+
+            .btn-secondary {
+                background: transparent;
+                color: var(--text-primary);
+                border: 1px solid rgba(0, 0, 0, 0.2);
+            }
+
+            .project-tag {
+                background: rgba(0, 0, 0, 0.05);
+            }
+
+            .floating-badge {
+                background: rgba(0, 0, 0, 0.04);
+                border: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            .contact::before {
+                background: radial-gradient(ellipse, rgba(255, 51, 51, 0.2) 0%, transparent 70%);
+            }
+
+            /* Keep text colors light on images for better contrast */
+            .project-title,
+            .project-desc,
+            .project-tag {
+                color: #f5f5f7 !important;
+            }
+
+            .project-tag {
+                background: rgba(255, 255, 255, 0.1) !important;
+            }
+
+            .floating-badge h4,
+            .floating-badge p {
+                color: #f5f5f7 !important;
+            }
+
+            .floating-badge {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            }
+
+            .about-content h2 {
+                color: #f5f5f7 !important;
+            }
+
+            .about-content p {
+                color: #86868b !important;
+            }
+
+            .hero h1 span {
+                background: linear-gradient(135deg, #1a1a1a 0%, #ff3333 50%, #cc0000 100%) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                background-clip: text !important;
+            }
+
+            .stat-number {
+                background: linear-gradient(135deg, #1a1a1a 0%, #ff3333 100%) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                background-clip: text !important;
+            }
+
+            /* Nav links visible on light background */
+            .nav-links a {
+                color: #f5f5f7 !important;
+            }
+
+            .nav-links a:hover {
+                color: #ff4444 !important;
+            }
         }
 
         * {
@@ -91,7 +199,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.03;
+            opacity: 0.02;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
@@ -119,6 +227,41 @@
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
             transition: all 0.3s ease;
+        }
+
+        /* ============================================
+           LOGO CONTAINER
+           ============================================
+           Container for logo icon and text.
+           - gap: Space between icon and text (currently 12px)
+           - align-items: Vertical alignment
+           - margin-left: Negative margin to move logo closer to left edge
+        */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 0;
+            margin-left: -40px; /* Moves logo closer to left edge */
+        }
+
+        /* ============================================
+           LOGO ICON
+           ============================================
+           Icon displayed next to the logo text.
+           - width/height: Change "45px" to adjust icon size
+           - object-fit: "contain" = fits inside, "cover" = fills container
+           - To use SVG instead: Replace <img> with <svg> tag
+        */
+        .logo-icon {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            object-position: center;
+            flex-shrink: 0;
+            margin: -15px;
+            padding: 0;
+            display: block;
         }
 
         /* ============================================
@@ -215,7 +358,7 @@
             transform: translate(-50%, -50%);
             width: 800px;
             height: 800px;
-            background: radial-gradient(circle, rgba(41, 151, 255, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 68, 68, 0.15) 0%, transparent 70%);
             animation: pulse 8s ease-in-out infinite;
         }
 
@@ -291,7 +434,7 @@
         */
         .hero h1 span {
             display: block;
-            background: linear-gradient(135deg, #fff 0%, #667eea 50%, #764ba2 100%);
+            background: linear-gradient(135deg, #fff 0%, #ff4444 50%, #cc0000 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -484,7 +627,7 @@
             height: 600px;
             border-radius: 30px;
             overflow: hidden;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #2e1a1a 0%, #3e1616 100%);
         }
 
         /* ============================================
@@ -576,7 +719,7 @@
         .stat-number {
             font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+            background: linear-gradient(135deg, #fff 0%, #ff4444 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -837,9 +980,9 @@
             font-size: 2rem;
         }
 
-        .service-card:nth-child(1) .service-icon { background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%); }
+        .service-card:nth-child(1) .service-icon { background: linear-gradient(135deg, rgba(255, 68, 68, 0.2) 0%, rgba(204, 0, 0, 0.2) 100%); }
         .service-card:nth-child(2) .service-icon { background: linear-gradient(135deg, rgba(240, 147, 251, 0.2) 0%, rgba(245, 87, 108, 0.2) 100%); }
-        .service-card:nth-child(3) .service-icon { background: linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%); }
+        .service-card:nth-child(3) .service-icon { background: linear-gradient(135deg, rgba(255, 102, 102, 0.2) 0%, rgba(255, 51, 51, 0.2) 100%); }
 
         .service-title {
             font-size: 1.5rem;
@@ -951,7 +1094,7 @@
            TEXT CONTENT:
            - Heading: Edit <h2> text in HTML
            - Description: Edit <p> text in HTML
-           - Email: Edit "hello@mmdigital.de" in HTML (both text and href)
+           - Email: Edit "supprt.mmdigital@gmail.com" in HTML (both text and href)
         */
         .contact {
             background: var(--gradient-hero);
@@ -967,7 +1110,7 @@
             transform: translateX(-50%);
             width: 1000px;
             height: 600px;
-            background: radial-gradient(ellipse, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(255, 68, 68, 0.15) 0%, transparent 70%);
         }
 
         .contact-content {
@@ -1040,9 +1183,14 @@
         }
 
         .footer-logo {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.02em;
+        }
+
+        footer .logo-icon {
+            width: 75px;
+            height: 75px;
         }
 
         .footer-links {
@@ -1068,6 +1216,7 @@
 
         @media (max-width: 1024px) {
             nav { padding: 20px 30px; }
+            .logo-container { margin-left: -20px; }
             section { padding: 100px 30px; }
             .about-grid { grid-template-columns: 1fr; gap: 60px; }
             .projects-grid { grid-template-columns: 1fr; }
@@ -1078,6 +1227,7 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
+            .logo-container { margin-left: -10px; }
             .hero h1 { font-size: 3rem; }
             .cta-group { flex-direction: column; align-items: center; }
             .stats-row { flex-direction: column; gap: 30px; }
@@ -1117,7 +1267,10 @@
          - Link destinations: Change href="#section-id"
     -->
     <nav>
-        <div class="logo">MMDigital</div>
+        <div class="logo-container">
+            <img src="MM-Logo.png" alt="MMDigital Logo" class="logo-icon">
+            <div class="logo">MMDigital</div>
+        </div>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
@@ -1140,9 +1293,6 @@
     -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-badge">
-                <span>Unity Development Studio</span>
-            </div>
             <h1>
                 We create
                 <span>digital worlds.</span>
@@ -1152,10 +1302,6 @@
                 <a href="#projects" class="btn btn-primary">Explore Projects</a>
                 <a href="#contact" class="btn btn-secondary">Get in Touch</a>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
         </div>
     </section>
 
@@ -1421,16 +1567,16 @@
          HOW TO CUSTOMIZE:
          - Heading: Change <h2> text
          - Description: Change <p> text
-         - Email: Change "hello@mmdigital.de" in both:
-           * The visible text: <span>hello@mmdigital.de</span>
-           * The mailto link: href="mailto:hello@mmdigital.de"
+         - Email: Change "supprt.mmdigital@gmail.com" in both:
+           * The visible text: <span>supprt.mmdigital@gmail.com</span>
+           * The mailto link: href="mailto:supprt.mmdigital@gmail.com"
     -->
     <section class="contact" id="contact">
         <div class="contact-content reveal">
             <h2>Let's create something amazing.</h2>
             <p>Ready for your next project? Contact us for a free consultation.</p>
-            <a href="mailto:hello@mmdigital.de" class="contact-email">
-                <span>hello@mmdigital.de</span>
+            <a href="mailto:supprt.mmdigital@gmail.com" class="contact-email">
+                <span>supprt.mmdigital@gmail.com</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
@@ -1452,12 +1598,14 @@
     -->
     <footer>
         <div class="footer-content">
-            <div class="footer-logo">MMDigital</div>
+            <div class="logo-container">
+                <img src="MM-Logo.png" alt="MMDigital Logo" class="logo-icon">
+                <div class="footer-logo">MMDigital</div>
+            </div>
             <div class="footer-links">
-                <a href="#">Unity Asset Store</a>
-                <a href="#">GitHub</a>
-                <a href="#">Discord</a>
-                <a href="#">Twitter</a>
+                <a href="https://assetstore.unity.com/publishers/124308">Unity Asset Store</a>
+                <a href="https://github.com/mmDigital-dev">GitHub</a>
+
             </div>
             <div class="footer-copy">© 2025 MMDigital. All rights reserved.</div>
         </div>
